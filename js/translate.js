@@ -4,8 +4,8 @@ $(document).ready(function(){
     $(".submitButton").on("click", function(e){
         e.preventDefault();
         var sourceText = $(".sourceText").val();
-        sourceLang = "en";
-        targetLang = "yi";
+        sourceLang = $(".sourceLang").val();
+        targetLang = $(".targetLang").val();
         appendText(sourceText);
 
         translateRecurse(sourceLang, targetLang, sourceText, sourceText, 0, 20);
@@ -19,13 +19,13 @@ $(document).ready(function(){
     }
 
     function translateRecurse(sourceLang, targetLang, prevSourceText, sourceText, depth, maxdepth){
-        var api_url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" 
+        var api_url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
             + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
 
         console.log(api_url);
 
         $.ajax({
-            type: "GET",    
+            type: "GET",
             url: api_url,
             success: function(data) {
                 console.log(data);
@@ -56,4 +56,3 @@ $(document).ready(function(){
     }
 
 });
-
