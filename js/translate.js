@@ -3,14 +3,31 @@ $(document).ready(function(){
 
     $(".submitButton").on("click", function(e){
         e.preventDefault();
+
+        $(".translationList").empty();
+
         var sourceText = $(".sourceText").val();
         sourceLang = $(".sourceLang").val();
         targetLang = $(".targetLang").val();
         appendText(sourceText);
+        history.pushState({},"BlabelFish","?q=" + encodeURI(sourceText));
 
         translateRecurse(sourceLang, targetLang, sourceText, sourceText, 0, 20);
 
     });
+
+    var queries = {};
+    $.each(document.location.search.substr(1).split('&'),function(c,q){
+        var i = q.split('=');
+        if(i[0] && i[1]){
+            queries[i[0].toString()] = i[1].toString();
+        }
+    });
+    if (queries["q"]){
+        console.log(queries);
+        $(".sourceText").val(encodeURI(queries["q"]));
+    }
+
 
     function appendText(entryText){
         $(".translationList").append(
